@@ -1,11 +1,11 @@
 # sound_shifter
 
+Audio file format conversion between
+- WAV(PCM)
+- AU/SUD(mu-law compression)
+- AIFF(ADPCM compression)
 
 
-4种常见格式的转换：MP3 WAV AAC FLAC
-
-步骤：
-1. 编写解析代码：把四种格式的文件解析先做出来
-2. 创建通用音频数据结构：提取四种格式的通用信息并且补齐缺失信息
-3. 编写转换代码：将文件解析结果转换为通用音频数据结构
-3. 编写生成代码：由通用音频数据结构转换为特定音频文件格式
+## audio sources
+- blues.wav: https://www.kaggle.com/datasets/carlthome/gtzan-genre-collection
+- M1F1-mulaw-AFsp.au: https://www.mmsp.ece.mcgill.ca/Documents/AudioFormats/AU/Samples.html
