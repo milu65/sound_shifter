@@ -4,7 +4,8 @@ def big_endian_ui(bytes):
 
 def read_header(file):
     header = {}
-    header["magic"] = file.read(4).decode("ascii")
+    header['magic'] = file.read(4).decode("ascii")
+    assert header['magic'] == '.sud' , print("header tag did not match",header['magic'])
     header["data_offset"] = big_endian_ui(file.read(4))
     header["data_size"] = big_endian_ui(file.read(4))
     header["encoding"] = big_endian_ui(file.read(4))
@@ -28,7 +29,13 @@ def read_audio(filepath):
     return chunks
 
 
-path = 'test_audio_files/M1F1-mulaw-AFsp.au'
-result = read_audio(path)
-with open("au_output.txt", "w") as file:
-    file.write(str(result))
+def main():
+    path = 'test_audio_files/M1F1-mulaw-AFsp.au'
+    result = read_audio(path)
+    with open("au_output.txt", "w") as file:
+        file.write(str(result))
+
+
+if __name__ == "__main__":
+    main()
+

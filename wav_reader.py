@@ -49,7 +49,12 @@ def read_chunks(filepath):
     return chunks
 
 
-path = 'test_audio_files/blues.wav'
-result = read_chunks(path)
-with open("wav_output.txt", "w") as file:
-    file.write(str(result))
+def main():
+    path = 'test_audio_files/blues.wav'
+    result = read_chunks(path)
+    with open("wav_output.txt", "w") as file:
+        file.write(str(result))
+
+
+if __name__ == "__main__":
+    main()
