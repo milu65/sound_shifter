@@ -2,7 +2,7 @@
 
 Audio file format conversion between
 - WAV(PCM)
-- AU/SUD(mu-law compression)
+- AU/SND(mu-law compression)
 - AIFF(ADPCM compression)
 
 
