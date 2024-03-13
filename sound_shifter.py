@@ -47,7 +47,7 @@ def write(filepath, filetype, audio):
         wav_writer.write_audio(filepath, [
             {
                 'chunk_name': 'RIFF',
-                'size': 12 + 32 + len(data) - 8,  # 4 bytes  TODO: clac size
+                'size': 12 + 32 + len(data) - 8,  # 4 bytes
                 'type': 'WAVE'
             },
             {
