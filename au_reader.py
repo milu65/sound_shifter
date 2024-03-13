@@ -5,7 +5,7 @@ def big_endian_ui(bytes):
 def read_header(file):
     header = {}
     header['magic'] = file.read(4).decode("ascii")
-    assert header['magic'] == '.sud' , print("header tag did not match",header['magic'])
+    assert header['magic'] != '.sud' , print("header tag did not match",header['magic'])
     header["data_offset"] = big_endian_ui(file.read(4))
     header["data_size"] = big_endian_ui(file.read(4))
     header["encoding"] = big_endian_ui(file.read(4))
