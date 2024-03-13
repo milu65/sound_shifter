@@ -19,9 +19,9 @@ header = {"magic": ".snd", "data_offset": 0x18,
           }
 data = {"data": ulaw_data}
 au_chunks = [header, data]
-au_writer.write("wav2au.au", au_chunks)
+au_writer.write("test_audio_output/wav2au.au", au_chunks)
 
 
 pcm_data_for_wav = ulaw.decode(ulaw_data)
 chunks[2]['data'] = pcm_data_for_wav.astype(np.int16).tobytes()
-wav_writer.write_audio("wav2au2wav.wav", chunks)
+wav_writer.write_audio("test_audio_output/wav2au2wav.wav", chunks)
