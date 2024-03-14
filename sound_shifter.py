@@ -5,6 +5,8 @@ import wav_reader
 import wav_writer
 import au_reader
 import au_writer
+import aiff_reader
+import aiff_writer
 
 import general_audio
 
@@ -34,7 +36,11 @@ def load(filepath, filetype):
                                            chunks[0]['channels'],
                                            ulaw_decoded_data)
     elif filetype == 'AIFF':
-        pass
+        chunks = aiff_reader.read_chunks(filepath)
+        data = np.frombuffer(chunks[2]['data'], dtype='>i2').reshape(-1, chunks[1]['num_channels'])
+        audio = general_audio.GeneralAudio(chunks[1]['sample_rate'],
+                                           chunks[1]['num_channels'],
+                                           data)
     else:
         print("unsupported file type", filetype)
     return audio
@@ -84,6 +90,36 @@ def write(filepath, filetype, audio):
         chunks = [header, data]
         au_writer.write(filepath, chunks)
     elif filetype == 'AIFF':
-        pass
+        data = audio.data.astype(np.int16).byteswap().tobytes()
+        # data = audio.data
+        # b= bytearray()
+        # for i in range(len(audio.data)):
+        #     for j in range(len(audio.data[i])):
+        #         b.extend(audio.data[i][j].tobytes())
+        bit_depth = 16
+        aiff_writer.write_audio(filepath, [
+            {
+                'chunk_name': 'FORM',
+                'size': len(data)+16+26+4,  # 4 bytes
+                'type': 'AIFF'
+            },
+            {
+                'chunk_name': 'COMM',
+                'size': 18,  # 4 bytes
+                'num_channels': audio.num_channels,  # 2 bytes
+                "sample_frames":len(data)//(2*audio.num_channels),
+                'sample_size': bit_depth,
+                'useless1': 0x400e,
+                'sample_rate': audio.sample_rate,  # 4 bytes
+                'useless2': 0  
+            },
+            {
+                'chunk_name': 'SSND',
+                'size': len(data)+8,  # 4 bytes
+                'useless1':0,
+                'useless2':0,
+                'data': data
+            }
+        ])
     else:
         print("unsupported file type", filetype)
